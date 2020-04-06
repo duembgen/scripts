@@ -30,7 +30,6 @@ def remove_outputs(nb):
             cell.execution_count = None
 
 if __name__ == '__main__':
-    # copy file
     parser = argparse.ArgumentParser(
         description = DESCRIPTION,
         epilog = "")
