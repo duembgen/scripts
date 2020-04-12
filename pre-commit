@@ -19,9 +19,10 @@
 # BUGS: This does not leave staged changes alone when used with the -a flag to
 # git commit, due to the fact that git stages ALL unstaged files when that flag
 # is used.
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SCRIPTS_DIR="scripts"
 
 # Find all staged Python files, and exit early if there aren't any.
-
 PYTHON_FILES=(`git diff --name-only --cached --diff-filter=AM | \
   grep --color=never '.py$'`)
 
@@ -91,9 +92,10 @@ if [ "$IPYTHON_FILES" ]; then
   # Format all staged files, then exit with an error code if any have uncommitted
   # changes.
   echo 'Formatting staged jupyter notebook files. . .'
+  echo "(running $( readlink -f "$DIR/../../$SCRIPTS_DIR/remove_output" ) )"
 
   for file in ${IPYTHON_FILES[@]}; do
-    ./bin/remove_output ${file} 
+    $DIR/../../$SCRIPTS_DIR/remove_output ${file} 
   done
 
   CHANGED_FILES=(`git diff --name-only ${IPYTHON_FILES[@]}`)
