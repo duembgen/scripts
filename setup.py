@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='scripts',
-    version='v0.0.6',
+    version='v0.0.7',
     description='useful system-wide scripts',
     url='http://github.com/duembgen/scripts',
     author='Frederike Duembgen',

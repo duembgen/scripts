@@ -4,15 +4,6 @@ DESCRIPTION = \
 """
     Remove output cells from jupyter python notebook.
     Simplifies version control of jupyter notebooks.\n
-
-    Usage: - remove output without backup:
-           python remove_output.py --backup='' notebook.ipynb 
-    
-           - remove output with standard backup name (notebook_backup.ipynb)
-           python remove_output.py notebook.ipynb
-
-           - remove output with custom backup name 
-           python remove_output.py --backup='custom.ipynb' notebook.ipynb
 """
 
 import argparse
@@ -33,25 +24,22 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description = DESCRIPTION,
         epilog = "")
-    parser.add_argument('filename', type=str, default='', help='name of jupyter notebook to be processed')
+    parser.add_argument('file',
+            type=argparse.FileType('r'),
+            help='name of jupyter notebook files to be processed', 
+            nargs='*') 
     args = parser.parse_args()
 
-    fname = args.filename
+    files = args.file
+    if files is None:
+        sys.exit()
 
-    if fname == "all":
-        for filename in os.listdir("./"):
-            if filename.endswith(".ipynb"): 
-                with io.open(filename, 'r') as f:
-                    nb = nbformat.read(f, nbformat.NO_CONVERT)
-
-                remove_outputs(nb)
-                with io.open(filename, 'w', encoding='utf8') as f:
-                    nbformat.write(nb, f)
-                print("wrote", filename)
-
-
-    else:
+    for file_ in files:
+        fname = file_.name
         base, ext = os.path.splitext(fname)
+        if ext != '.ipynb':
+            print('skipping', fname, base, ext)
+            continue
 
         with io.open(fname, 'r') as f:
             nb = nbformat.read(f, nbformat.NO_CONVERT)
