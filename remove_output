@@ -14,14 +14,14 @@ DESCRIPTION = \
            - remove output with custom backup name 
            python remove_output.py --backup='custom.ipynb' notebook.ipynb
 """
-import sys
-import io
-import os
-import nbformat
-from shutil import copyfile
 
 import argparse
+import io
+import os
+from shutil import copyfile
+import sys
 
+import nbformat
 
 def remove_outputs(nb):
     for cell in nb.cells:

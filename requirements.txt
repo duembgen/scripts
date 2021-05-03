@@ -1,0 +1,2 @@
+# the following line means we read install_requires from setup.py
+. 
