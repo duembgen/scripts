@@ -1,0 +1,5 @@
+- id: remove-output
+  name: Remove jupyter outputs
+  description: This hook removes all output cells from jupyter notebooks.
+  entry: remove_output
+  langauge: python
